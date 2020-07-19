@@ -1,0 +1,141 @@
+<div class="container bootstrap snipets">
+	<form class="form-inline  border-tb">
+		<div class="form-group mb-2">
+			<span>Filtar por:</span>
+		</div>
+		<div class="form-group mx-sm-3 mb-2">
+			<label class="form-check-label ckb"> 
+				<input type="checkbox" ng-click="includeAvaliable(true)" /> Disponível
+				<span class="checkmark"></span>
+			</label>
+		</div>
+		<div class="form-group mx-sm-3 mb-2">
+			<div class="dropdown filter-dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true">
+					Preço:
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+					<li>
+						<label>
+							<input type="checkbox" ng-model='checkall' value='' ng-click="includePrice(true); checkAll();" /> Todos
+						</label>
+					</li>
+					<li>
+						<label> <input type="checkbox" ng-checked="checkall" ng-click="includePrice(1)" /> $ </label>
+					</li>
+					<li>
+						<label> <input type="checkbox"  ng-checked="checkall" ng-click="includePrice(2)"/> $$ </label>
+					</li>
+					<li>
+						<label> <input type="checkbox" ng-checked="checkall" ng-click="includePrice(3)" /> $$$ </label>
+					</li>
+					<li>
+						<label> <input type="checkbox" ng-checked="checkall" ng-click="includePrice(4)" /> $$$$ </label>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="form-group mx-sm-3 mb-2">
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true">
+					Categorias:
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+					<li>
+						<label>
+							<input type="checkbox" ng-model='checkall'  /> Todos
+						</label>
+					</li>
+					<li><label>
+							<input type="checkbox"  ng-checked="checkall" ng-click="includeCategory('Vestido')" /> Blusa
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="checkbox"  ng-checked="checkall" ng-click="includeCategory('Calça')" /> Calça
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="checkbox"  ng-checked="checkall" ng-click="includeCategory('Casaco')" /> Casaco
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="checkbox"  ng-checked="checkall" ng-click="includeCategory('Vestido')" /> Vestido
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="checkbox"  ng-checked="checkall" ng-click="includeCategory('Body')" /> Body
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="btn-limpar">
+			<button type="button" class="btn btn-outline-dark" ng-click="clearFilter()">Limpar</button>
+		</div>
+	</form>
+	<div class="spacer"></div> 
+	<h1 class="title">{{ title }}</h1>
+	<div class="spacer"></div> 
+	<div class="row flow-offset-1">
+		<div class="col-xs-6 col-md-4"ng-repeat="produto in produtos | filter:productsFilter | filter:priceFilter | filter:avaliableFilter">
+			<div class="product tumbnail thumbnail-3">
+
+				<div class="images" ng-repeat="images in produto.imagens">
+					<img class="img-fluid mx-auto d-block" ng-if="images.destacada"
+						ng-src="../arquivos/produtos/{{images.nome}}" alt="{{produto.nome}}" />
+				</div>
+
+				<div class="caption">
+					<h2 class="product_title">
+						{{produto.nome}}
+					</h2>
+									
+					<jk-rating-stars 
+						max-rating="5" 
+						rating="rating" 
+						read-only="false" 
+						shadow="false" 
+						reset-allowed="false" 
+						off-icon="star_border" 
+						off-color="false"
+						on-rating="onItemRating(rating)" >
+					</jk-rating-stars>
+					<div class="product-info">
+						<span class="price sale">{{produto.categoria}} -
+							{{	
+									produto.precoMedio == 4 ? '$$$$': '' 
+									|| produto.precoMedio == 3 ? '$$$': '' 
+									|| produto.precoMedio == 2 ? '$$': '' 
+									|| produto.precoMedio == 1 ? '$': ''  
+							}}
+						</span>
+						<div class="category">
+							<span class="product-avaliable" ng-class="produto.disponivel ? 'avaliable' : 'no_avaliable' "></span>
+							<p class="text-avaliable">{{produto.disponivel ? 'Disponível': 'Indisponível'}}</p>
+						</div>
+					</div>
+				</div>
+				<button type="button" class="btn btn-info btn-lg btn-block btn-dtl">Detalhe</button>
+				<div class="spacer"></div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+			  <div class="col text-center">
+				<div class="spacer"></div> 
+				<button type="button" class="btn btn-outline-dark btn-lg no-border next-page">Proxíma Página</button>
+				<div class="spacer"></div>  
+			</div>
+			</div>
+		  </div>
+		  
+	
+	</div>
